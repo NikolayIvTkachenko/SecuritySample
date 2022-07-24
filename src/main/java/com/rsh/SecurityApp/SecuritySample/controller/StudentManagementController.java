@@ -28,26 +28,35 @@ public class StudentManagementController {
 	);
 	
 	@GetMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	//@PreAuthorize("hasAnyRole('ADMIN, USER')")
+	//@PreAuthorize("hasAuthority('student:read')")
+	//@PreAuthorize("hasAnyAuthority('ROLE_ADMIN, ROLE_USER')")
+	//@PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
 	public List<Student> getAllStudents(){
+		System.out.println("");
+		System.out.println("getAllStudents()");
 		return STUDENTS;
 	}
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('student:write')")
 	public void registerNewStudent(@RequestBody Student student) {
+		System.out.println("");
 		System.out.println("registerNewStudent => "+ student);
 	}
 	
 	@DeleteMapping(path = "{studentId}")
 	@PreAuthorize("hasAuthority('student:write')")
 	public void deleteStudent(@PathVariable("studentId") Integer studentId) {
+		System.out.println("");
 		System.out.println("delete stdent => " + studentId);
 	}
 	
 	@PutMapping(path = "{studentId}")
 	@PreAuthorize("hasAuthority('student:write')")
 	public void updateStudent(@PathVariable("studentId") Integer studentId, @RequestBody Student student) {
+		System.out.println("");
 		System.out.println(String.format("update = > %s %s", studentId, student));
 	}
 	

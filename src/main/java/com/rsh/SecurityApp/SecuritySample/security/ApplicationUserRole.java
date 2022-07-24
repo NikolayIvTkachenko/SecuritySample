@@ -19,14 +19,13 @@ public enum ApplicationUserRole {
 			ApplicationUserPermission.STUDENT_WRITE)),
 	USER(Sets.newHashSet(
 			ApplicationUserPermission.STUDENT_READ,
-			ApplicationUserPermission.STUDENT_WRITE));
+			ApplicationUserPermission.COURSE_READ));
 
 	private final Set<ApplicationUserPermission> permissions;
 	
 	ApplicationUserRole(Set<ApplicationUserPermission> permissions){
 		this.permissions = permissions;
 	}
-	
 	
 	public Set<ApplicationUserPermission> getPermissions() {
 		return permissions;
@@ -36,7 +35,12 @@ public enum ApplicationUserRole {
 	public Set<SimpleGrantedAuthority> getGrantedAuthorities(){
 		Set<SimpleGrantedAuthority> permissionSGA = getPermissions().stream().map(p -> new SimpleGrantedAuthority(p.getPermission()))
 			.collect(Collectors.toSet());
-		permissionSGA.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+		System.out.println("");
+		System.out.println("====");
+		System.out.println("this.name() = " + this.name());
+		String strRole = String.format("ROLE_%s",this.name());
+		System.out.println("strRole = > " + strRole);
+		permissionSGA.add(new SimpleGrantedAuthority(String.format("ROLE_%s",this.name())));
 		
 		return permissionSGA;
 	}
